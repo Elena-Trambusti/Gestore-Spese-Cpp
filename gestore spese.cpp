@@ -18,6 +18,71 @@ void mostraMenu(){
 		cout<<"4.Esci e SALVA I DATI"<<endl;
 		cout<<"Seleziona un opzione (1-4): "<<endl;
 }
+
+// 2. FUNZIONE PER AGGIUNGERE UNA NUOVA SPESA (Opzione 1)
+void aggiungiSpesa(spesa listaSpese[], int &contatoreSpese, float &totaleSpese) {
+    if(contatoreSpese < 100) {
+        cout << "\nInserisci il nome della spesa (senza spazi): " << endl;
+        cin >> listaSpese[contatoreSpese].nome;
+        
+        cout << "Inserisci l'importo (es. 45.50): " << endl;
+        cin >> listaSpese[contatoreSpese].importo;
+        
+        totaleSpese = totaleSpese + listaSpese[contatoreSpese].importo;
+        contatoreSpese++;
+        
+        cout << "Spesa salvata con successo!" << endl;
+    } else {
+        cout << "\nERRORE! Memoria array piena." << endl;
+    }
+}
+
+// 3. FUNZIONE PER VISUALIZZARE L'ELENCO DELLE SPESE (Opzione 2)
+void visualizzaSpese(spesa listaSpese[], int contatoreSpese) {
+    cout << "\n--------LISTA DELLE SPESE--------" << endl;
+    if(contatoreSpese == 0) {
+        cout << "Nessuna spesa registrata al momento." << endl;
+        cout << "---------------------------------" << endl;
+    } else {
+        for(int i = 0; i < contatoreSpese; i++) {
+            cout << i + 1 << ". " << listaSpese[i].nome << " - Euro: " << listaSpese[i].importo << endl;
+        }
+    }
+}
+
+// 4. FUNZIONE PER CONTROLLARE IL SALDO (Opzione 3)
+void controllaSaldo(float budgetIniziale, float totaleSpese) {
+    float saldoRimanente = budgetIniziale - totaleSpese;
+    
+    cout << "\n--------RIEPILOGO SALDO--------" << endl;
+    cout << "Budget iniziale: Euro " << budgetIniziale << endl;
+    cout << "Totale spese: Euro " << totaleSpese << endl;
+    cout << "Saldo rimanente: Euro " << saldoRimanente << endl;
+    cout << "-------------------------------" << endl;
+    
+    if(saldoRimanente < 0) {
+        cout << "ATTENZIONE! Hai superato il limite mensile!" << endl;
+    }
+}
+
+// 5. FUNZIONE PER SALVARE I DATI SU FILE (Opzione 4)
+void salvaDati(spesa listaSpese[], int contatoreSpese, float budgetIniziale) {
+    ofstream fileScrittura("spese.txt");
+    
+    if(fileScrittura.is_open()) {
+        fileScrittura << budgetIniziale << endl;
+        
+        for(int i = 0; i < contatoreSpese; i++) {
+            fileScrittura << listaSpese[i].nome << " " << listaSpese[i].importo << endl;
+        }
+        fileScrittura.close();
+        cout << "\n-> Dati salvati con successo sul disco rigido!" << endl;
+        cout << "\nUscita in corso. Arrivederci!" << endl;
+    } else {
+        cout << "\nERRORE CRITICO: Impossibile creare il file di salvataggio!" << endl;
+    }
+}
+
 int main(){
 	//Dichiaro le variabili principali
 	float budgetIniziale = 0.0;
@@ -56,69 +121,16 @@ int main(){
 		
 		//Struttura condizionale per smistare le scelte
 		if(scelta==1){
-			//Controllo che il limite di 100 non sia superato
-			if(contatoreSpese<100){
-				cout<<"\nInserisci il nome della spesa (senza spazi): "<<endl;
-				cin>>listaSpese[contatoreSpese].nome;
-				
-				cout<<"Inserisci l'importo (es. 45.50): "<<endl;
-				cin>>listaSpese[contatoreSpese].importo;
-				totaleSpese=totaleSpese+;
-				contatoreSpese++;
-				cout<<"Spesa salvata con successo!"<<endl;
-			}else{
-				cout<<"\nERRORE! Memoria array piena."<<endl;
-			}
+			            aggiungiSpesa(listaSpese, contatoreSpese, totaleSpese);
 		}
 		else if(scelta==2){
-			cout<<"\n--------LISTA DELLE SPESE---------"<<endl;
-			//controllo se l'array e' vuoto
-			if(contatoreSpese==0){
-					cout<<"Nessuna spesa registrata al momento."<<endl;
-						cout<<"--------------------------------"<<endl;
-			}else{
-				//Uso il ciclo for per scorrere i cassetti dell'array fino al numero esatto di spese inserite
-				for(int i=0;i<contatoreSpese;i++){
-					cout<<i+1<<"."<<listaSpese[i].nome<<"- Euro: "<<listaSpese[i].importo<<endl;
-				}
-			}
-		}
-		//calcolo saldo
+			visualizzaSpese(listaSpese, contatoreSpese);
+        }
 		else if(scelta==3){
-			//Calcolo la differenza tra budget e spese
-			float saldoRimanente=budgetIniziale-totaleSpese;
-			
-				cout<<"\n--------RIEPILOGO SALDO--------"<<endl;
-					cout<<"Budget iniziale: Euro "<<budgetIniziale<<endl;
-						cout<<"Totale spese: Euro "<<totaleSpese<<endl;
-							cout<<"Saldo rimanente: Euro "<<saldoRimanente<<endl;
-								cout<<"----------------------------------"<<endl;
-							//Avviso l'utente se e' in rosso
-							if(saldoRimanente<0){
-									cout<<"ATTENZIONE! Hai superato il limite mensile"<<endl;
-							}
-		}
-		//uscita e scrittura file
+			controllaSaldo(budgetIniziale, totaleSpese);
+        }
 		else if(scelta==4){
-			ofstream fileScrittura("spese.txt");
-			
-			if(fileScrittura.is_open()){
-				fileScrittura<<budgetIniziale<<endl;
-				
-				for(int i=0;i<contatoreSpese;i++){
-					//scrive nome importo prendendoli dalla struct
-					fileScrittura<<listaSpese[i].nome<<" "<<listaSpese[i].importo<<endl;
-				}
-				fileScrittura.close();
-				cout<<"\n-> Dati salvati con successo sul disco rigido!"<<endl;
-			}else{
-				cout<<"\nERRORE CRITICO: Impossibile creare il file di salvataggio!"<<endl;
-			}
-			
-			cout<<"\nUscita in corso. Arrivederci!"<<endl;
-	}
-		else{
-			cout<<"ERRORE! Scelta non valida. Inserisci un numero da 1 a 4."<<endl;
+			   salvaDati(listaSpese, contatoreSpese, budgetIniziale);
 		}
 	}while(scelta!=4);//Il programma si ripete finche' l'utente non sceglie un opzione valida
 	
