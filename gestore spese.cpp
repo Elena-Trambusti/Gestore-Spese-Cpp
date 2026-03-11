@@ -35,7 +35,7 @@ int main(){
 		fileLettura>>budgetIniziale;
 
 	//legge dal file e riempie la nostra struct
-	while(fileLettura>>listaSpese[contatoreSpese].nome>>listaSpese[contatoreSpese].importo){
+	while(contatoreSpese<100&&fileLettura>>listaSpese[contatoreSpese].nome>>listaSpese[contatoreSpese].importo){
 		totaleSpese=totaleSpese+
 		listaSpese[contatoreSpese].importo;
 		contatoreSpese++;
@@ -63,6 +63,7 @@ int main(){
 				
 				cout<<"Inserisci l'importo (es. 45.50): "<<endl;
 				cin>>listaSpese[contatoreSpese].importo;
+				totaleSpese=totaleSpese+;
 				contatoreSpese++;
 				cout<<"Spesa salvata con successo!"<<endl;
 			}else{
@@ -124,4 +125,5 @@ int main(){
 	
 	return 0;
 }
+
 
