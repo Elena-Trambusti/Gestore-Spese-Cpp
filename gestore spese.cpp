@@ -8,6 +8,16 @@ struct spesa{
 	string nome;
 	float importo;
 };
+
+//FUNZIONE PER STAMPARE IL MENU A SCHERMO
+void mostraMenu(){
+	    cout<<"\n-----MENU PRINCIPALE-----"<<endl;
+		cout<<"1.Aggiungi una nuova spesa"<<endl;
+		cout<<"2.Mostra la lista delle spese"<<endl;
+		cout<<"3.Controlla il saldo rimanente"<<endl;
+		cout<<"4.Esci e SALVA I DATI"<<endl;
+		cout<<"Seleziona un opzione (1-4): "<<endl;
+}
 int main(){
 	//Dichiaro le variabili principali
 	float budgetIniziale = 0.0;
@@ -41,12 +51,7 @@ int main(){
 	
 	//Il ciclo principale che gestisce il Menu
 	do{
-		cout<<"\n-----MENU PRINCIPALE-----"<<endl;
-		cout<<"1.Aggiungi una nuova spesa"<<endl;
-		cout<<"2.Mostra la lista delle spese"<<endl;
-		cout<<"3.Controlla il saldo rimanente"<<endl;
-		cout<<"4.Esci e SALVA I DATI"<<endl;
-		cout<<"Seleziona un opzione (1-4): "<<endl;
+		mostraMenu();
 		cin>>scelta;
 		
 		//Struttura condizionale per smistare le scelte
@@ -119,3 +124,4 @@ int main(){
 	
 	return 0;
 }
+
