@@ -6,8 +6,7 @@ int main() {
     float totaleSpese = 0.0;
     int scelta = 0;
     
-    spesa listaSpese[100];
-    int contatoreSpese = 0; 
+    vector<spesa>listaSpese;
     
     // LETTURA DI MEMORIA ALL'AVVIO
     ifstream fileLettura("spese.txt");
@@ -15,14 +14,16 @@ int main() {
     if(fileLettura.is_open()) {
         fileLettura >> budgetIniziale;
         
-        while(contatoreSpese < 100 && fileLettura >> listaSpese[contatoreSpese].nome >> listaSpese[contatoreSpese].importo) {
-            totaleSpese = totaleSpese + listaSpese[contatoreSpese].importo;
-            contatoreSpese++;
+        spesa spesaTemp;
+        
+        while(fileLettura>>spesaTemp.nome>>spesaTemp.importo){
+            listaSpese.push_back(spesaTemp);
+            totaleSpese=totaleSpese+spesaTemp.importo;
         }
         fileLettura.close();
         
         cout << "====MEMORIA CARICATA====" << endl;
-        cout << "Trovate " << contatoreSpese << " spese salvate nel precedente utilizzo.\n" << endl;
+        cout << "Trovate"<<listaSpese.size()<<" spese salvate nel precedente utilizzo."<<endl;
     } else {
         cout << "Nessun salvataggio trovato. Inserisci il tuo budget mensile: " << endl;
         cin >> budgetIniziale;
@@ -34,16 +35,16 @@ int main() {
         cin >> scelta;
         
         if(scelta == 1) {
-            aggiungiSpesa(listaSpese, contatoreSpese, totaleSpese);
+            aggiungiSpesa(listaSpese, totaleSpese);
         }
         else if(scelta == 2) {
-            visualizzaSpese(listaSpese, contatoreSpese);
+            visualizzaSpese(listaSpese);
         }
         else if(scelta == 3) {
-            controllaSaldo(budgetIniziale, totaleSpese);
+            controlloSaldo(budgetIniziale, totaleSpese);
         }
         else if(scelta == 4) {
-            salvaDati(listaSpese, contatoreSpese, budgetIniziale);
+            salvaDati(listaSpese, budgetIniziale);
         }
         else {
             cout << "ERRORE! Scelta non valida. Inserisci un numero da 1 a 4." << endl;
