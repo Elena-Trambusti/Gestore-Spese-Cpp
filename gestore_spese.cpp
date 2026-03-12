@@ -11,38 +11,38 @@ void mostraMenu() {
 }
 
 // FUNZIONE PER VISUALIZZARE L'ELENCO DELLE SPESE
-void visualizzaSpese(spesa listaSpese[], int contatoreSpese) {
+void visualizzaSpese(vector<spesa>&listaSpese) {
     cout << "\n--------LISTA DELLE SPESE--------" << endl;
-    if(contatoreSpese == 0) {
+    if(listaSpese.size() == 0) {
         cout << "Nessuna spesa registrata al momento." << endl;
         cout << "---------------------------------" << endl;
     } else {
-        for(int i = 0; i < contatoreSpese; i++) {
+        for(int i = 0; i <listaSpese.size(); i++) {
             cout << i + 1 << ". " << listaSpese[i].nome << " - Euro: " << listaSpese[i].importo << endl;
         }
     }
 }
 
 // FUNZIONE PER AGGIUNGERE UNA NUOVA SPESA
-void aggiungiSpesa(spesa listaSpese[], int &contatoreSpese, float &totaleSpese) {
-    if(contatoreSpese < 100) {
+void aggiungiSpesa(vector<spesa>&listaSpese,float &totaleSpese) {
+    
+      spesa nuovaSpesa;
+      
         cout << "\nInserisci il nome della spesa (senza spazi): " << endl;
-        cin >> listaSpese[contatoreSpese].nome;
+        cin >> nuovaSpesa.nome;
         
         cout << "Inserisci l'importo (es. 45.50): " << endl;
-        cin >> listaSpese[contatoreSpese].importo;
+        cin >> nuovaSpesa.importo;
         
-        totaleSpese = totaleSpese + listaSpese[contatoreSpese].importo;
-        contatoreSpese++;
+        listaSpese.push_back(nuovaSpesa);
+        
+        totaleSpese = totaleSpese +nuovaSpesa.importo;
         
         cout << "Spesa salvata con successo!" << endl;
-    } else {
-        cout << "\nERRORE! Memoria array piena." << endl;
-    }
 }
 
 // FUNZIONE PER CONTROLLARE IL SALDO
-void controllaSaldo(float budgetIniziale, float totaleSpese) {
+void controlloSaldo(float budgetIniziale, float totaleSpese) {
     float saldoRimanente = budgetIniziale - totaleSpese;
     
     cout << "\n--------RIEPILOGO SALDO--------" << endl;
@@ -57,13 +57,13 @@ void controllaSaldo(float budgetIniziale, float totaleSpese) {
 }
 
 // FUNZIONE PER SALVARE I DATI SU FILE
-void salvaDati(spesa listaSpese[], int contatoreSpese, float budgetIniziale) {
+void salvaDati(vector<spesa>&listaSpese, float budgetIniziale) {
     ofstream fileScrittura("spese.txt");
     
     if(fileScrittura.is_open()) {
         fileScrittura << budgetIniziale << endl;
         
-        for(int i = 0; i < contatoreSpese; i++) {
+        for(int i = 0; i <listaSpese.size(); i++) {
             fileScrittura << listaSpese[i].nome << " " << listaSpese[i].importo << endl;
         }
         fileScrittura.close();
