@@ -39,6 +39,15 @@ int main() {
     do {
         mostraMenu();
         cin >> scelta;
+
+        //CONTROLLO
+        if(cin.fail(){
+            cin.clear();
+            cin.ignore(10000,'\n');
+            scelta=0;
+            cout<<"ATTENZIONE!DEvi inserire un numero da 1 a 4!"<<endl;
+            continue;
+        }
         
         if(scelta == 1) {
             aggiungiSpesa(listaSpese, totaleSpese);
