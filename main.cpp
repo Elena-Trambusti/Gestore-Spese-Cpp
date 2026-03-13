@@ -1,4 +1,5 @@
 #include "gestore_spese.h"
+#include<string>
 
 // --- IL CUORE DEL PROGRAMMA ---
 int main() {
@@ -9,14 +10,19 @@ int main() {
     vector<spesa>listaSpese;
     
     // LETTURA DI MEMORIA ALL'AVVIO
-    ifstream fileLettura("spese.txt");
+    ifstream fileLettura("spese.csv");
     
     if(fileLettura.is_open()) {
         fileLettura >> budgetIniziale;
+
+        fileLettura.ignore();
         
         spesa spesaTemp;
+        string importoStringa;
         
-        while(fileLettura>>spesaTemp.nome>>spesaTemp.importo){
+        while(getline(fileLettura, spesaTemp.nome,';')){
+            getline(fileLettura,importoStringa,'\n');
+            spesaTemp.importo=stof(importoStringa);
             listaSpese.push_back(spesaTemp);
             totaleSpese=totaleSpese+spesaTemp.importo;
         }
