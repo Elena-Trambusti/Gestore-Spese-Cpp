@@ -58,13 +58,13 @@ void controlloSaldo(float budgetIniziale, float totaleSpese) {
 
 // FUNZIONE PER SALVARE I DATI SU FILE
 void salvaDati(vector<spesa>&listaSpese, float budgetIniziale) {
-    ofstream fileScrittura("spese.txt");
+    ofstream fileScrittura("spese.csv");
     
     if(fileScrittura.is_open()) {
         fileScrittura << budgetIniziale << endl;
         
         for(int i = 0; i <listaSpese.size(); i++) {
-            fileScrittura << listaSpese[i].nome << " " << listaSpese[i].importo << endl;
+            fileScrittura << listaSpese[i].nome << ";" << listaSpese[i].importo << endl;
         }
         fileScrittura.close();
         cout << "\n-> Dati salvati con successo sul disco rigido!" << endl;
