@@ -26,7 +26,7 @@ Spesa(string n, float i){
 }
 //I GETTER (per leggere in sicurezza)
 string getNome()const{return nome;}
-float getImporto()const{retunr importo;}
+float getImporto()const{return importo;}
 
 //I SETTER (per scrivere in sicurezza)
 void setNome(string n){nome=n;}
