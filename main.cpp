@@ -7,7 +7,7 @@ int main() {
     float totaleSpese = 0.0;
     int scelta = 0;
     
-    vector<spesa>listaSpese;
+    vector<Spesa>listaSpese;
     
     // LETTURA DI MEMORIA ALL'AVVIO
     ifstream fileLettura("spese.csv");
@@ -17,14 +17,20 @@ int main() {
 
         fileLettura.ignore();
         
-        spesa spesaTemp;
+        Spesa spesaTemp;
         string importoStringa;
+        float importoTemp;
+        string nomeTemp;
         
-        while(getline(fileLettura, spesaTemp.nome,';')){
+        while(getline(fileLettura,nomeTemp,';')){
             getline(fileLettura,importoStringa,'\n');
-            spesaTemp.importo=stof(importoStringa);
-            listaSpese.push_back(spesaTemp);
-            totaleSpese=totaleSpese+spesaTemp.importo;
+            importoTemp=stof(importoStringa);
+            //creo l'oggetto
+            Spesa spesaCaricata(nomeTemp,importoTemp);
+            //aggiungo l'oggetto alla lista
+            listaSpese.push_back(spesaCaricata);
+            totaleSpese=totaleSpese+importoTemp;
+        
         }
         fileLettura.close();
         
@@ -41,7 +47,7 @@ int main() {
         cin >> scelta;
 
         //CONTROLLO
-        if(cin.fail(){
+        if(cin.fail()){
             cin.clear();
             cin.ignore(10000,'\n');
             scelta=0;
@@ -64,8 +70,7 @@ int main() {
         else {
             cout << "ERRORE! Scelta non valida. Inserisci un numero da 1 a 4." << endl;
         }
-        
-    } while(scelta != 4);
+        } while(scelta != 4);
     
     return 0;
 }
